@@ -1,0 +1,17 @@
+{
+    "name": "oliveiraj/aylin",
+    "description": "basic fuzzy searcher for files built in php",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Oliveiraj\\Aylin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jordan",
+            "email": "jordansilva102@gmail.com"
+        }
+    ],
+    "require": {}
+}
