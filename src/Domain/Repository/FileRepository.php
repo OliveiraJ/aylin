@@ -1,9 +1,9 @@
 <?php
 
-namespace Oliveiraj\Aylin\Repository;
+namespace Oliveiraj\Aylin\Domain\Repository;
 
-use Oliveiraj\Aylin\Model\File;
-use Oliveiraj\Aylin\Model\Tag;
+use Oliveiraj\Aylin\Domain\Model\File\File;
+use Oliveiraj\Aylin\Domain\Model\Tag\Tag;
 
 interface FileRepository
 {

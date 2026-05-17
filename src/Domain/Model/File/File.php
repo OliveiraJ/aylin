@@ -1,11 +1,11 @@
 <?php
 
-namespace Oliveiraj\Aylin\Model;
+namespace Oliveiraj\Aylin\Domain\Model\File;
 
 use DateTimeInterface;
 use DateTimeImmutable;
 use DomainException;
-use Oliveiraj\Aylin\Model\Tag;
+use Oliveiraj\Aylin\Domain\Model\Tag\Tag;
 
 class File
 {

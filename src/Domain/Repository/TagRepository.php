@@ -1,8 +1,8 @@
 <?php
 
-namespace Oliveiraj\Aylin\Repository;
+namespace Oliveiraj\Aylin\Domain\Repository;
 
-use Oliveiraj\Aylin\Model\Tag;
+use Oliveiraj\Aylin\Domain\Model\Tag\Tag;
 
 interface TagRepository
 {

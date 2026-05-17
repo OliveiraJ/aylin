@@ -1,6 +1,6 @@
 <?php
 
-namespace Oliveiraj\Aylin\Model;
+namespace Oliveiraj\Aylin\Domain\Model\Tag;
 
 use DateTimeImmutable;
 use DateTimeInterface;
