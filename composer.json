@@ -1,17 +1,27 @@
 {
-    "name": "oliveiraj/aylin",
-    "description": "basic fuzzy searcher for files built in php",
-    "type": "project",
-    "autoload": {
-        "psr-4": {
-            "Oliveiraj\\Aylin\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Jordan",
-            "email": "jordansilva102@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "oliveiraj/aylin",
+  "description": "basic fuzzy searcher for files built in php",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Oliveiraj\\Aylin\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Oliveiraj\\Aylin\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Jordan",
+      "email": "jordansilva102@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^13.1"
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
+  }
 }
