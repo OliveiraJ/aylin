@@ -3,4 +3,6 @@
 /database/aylin.db
 /vendor/
 
+composer.lock
+
 .phpunit*
