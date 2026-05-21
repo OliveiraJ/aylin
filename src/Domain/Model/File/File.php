@@ -20,7 +20,7 @@ class File
      * @param string $path;
      * @param Tag[] $tags;
      */
-    public function __construct(?int $id, string $path, array $tags = [])
+    public function __construct(?int $id, string $path, ?array $tags)
     {
         $this->id = $id;
         $this->path = $path;

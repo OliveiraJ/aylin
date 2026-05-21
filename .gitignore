@@ -1,6 +1,7 @@
 .vscode
 .zed
 /database/aylin.db
+/docs/
 /vendor/
 
 composer.lock

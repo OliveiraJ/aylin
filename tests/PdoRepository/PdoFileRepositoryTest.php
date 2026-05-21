@@ -18,4 +18,21 @@ class PdoFileRepositoryTest extends TestCase
             "File added to the database with success",
         );
     }
+
+    public function testGetFiles(): void
+    {
+        $conn = ConnectionCreator::createConnection();
+        $repository = new PdoFileRepository($conn);
+        $files = $repository->allFiles();
+        $this->assertIsArray($files, "Files found successfully") &&
+            $this->assertContainsNotOnlyInstancesOf("File", $files);
+    }
+
+    public function testGetFile(): void
+    {
+        $conn = ConnectionCreator::createConnection();
+        $repository = new PdoFileRepository($conn);
+        $file = $repository->find(1);
+        $this->assertInstanceOf("File", $file);
+    }
 }

@@ -41,7 +41,7 @@ class PdoFileRepository implements FileRepository
             SELECT
                 f.*, ft.tagId
             FROM files f
-            JOIN file_tags ft ON ft.fileId = f.id
+            LEFT JOIN file_tags ft ON ft.fileId = f.id
             WHERE f.id = :id
         SQL;
 
@@ -49,9 +49,9 @@ class PdoFileRepository implements FileRepository
         $stmt->bindValue(":id", $id);
         $stmt->execute();
 
-        $file = $stmt->fetch();
+        $file = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return new File((int) $file["id"], $file["path"], $file["tagId"]);
+        return new File((int) $file["id"], $file["path"], $file["tagId"] ?? []);
     }
     public function allFilesByTag(Tag $tag): array
     {
@@ -132,7 +132,7 @@ class PdoFileRepository implements FileRepository
         $files = [];
 
         foreach ($filesData as $fileData) {
-            $files[] = new File($fileData["id"], $fileData["path"]);
+            $files[] = new File($fileData["id"], $fileData["path"], $fileData["tagId"]);
         }
 
         return $files;
