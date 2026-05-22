@@ -5,28 +5,33 @@ namespace Oliveiraj\Aylin\Domain\Model\File;
 use DateTimeInterface;
 use DateTimeImmutable;
 use DomainException;
+use InvalidArgumentException;
 use Oliveiraj\Aylin\Domain\Model\Tag\Tag;
 
 class File
 {
     private ?int $id;
     private string $path;
-    /** @var Tag[] $tags */
+    /** @var Tag[] */
     private array $tags;
     private DateTimeInterface $createdAt;
     private ?DateTimeInterface $updatedAt;
 
     /**
-     * @param string $path;
-     * @param Tag[] $tags;
+     * @param Tag[]|null $tags
      */
-    public function __construct(?int $id, string $path, ?array $tags)
-    {
+    public function __construct(
+        ?int $id,
+        string $path,
+        ?array $tags = null,
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $updatedAt = null,
+    ) {
         $this->id = $id;
-        $this->path = $path;
-        $this->tags = $tags;
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = null;
+        $this->path = self::normalizePath($path);
+        $this->tags = $tags ?? [];
+        $this->createdAt = $createdAt ?? new DateTimeImmutable();
+        $this->updatedAt = $updatedAt;
     }
 
     public function getId(): ?int
@@ -34,9 +39,9 @@ class File
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
-        return $this->id = $id;
+        $this->id = $id;
     }
 
     public function getPath(): string
@@ -46,7 +51,7 @@ class File
 
     public function setPath(string $path): void
     {
-        $this->path = $path;
+        $this->path = self::normalizePath($path);
     }
 
     public function getCreatedAt(): DateTimeInterface
@@ -54,7 +59,7 @@ class File
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
@@ -64,8 +69,28 @@ class File
         $this->updatedAt = $updatedAt;
     }
 
+    public function touch(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
+    }
+
     public function setTag(Tag $tag): void
     {
+        $tagId = $tag->getId();
+        if ($tagId !== null) {
+            foreach ($this->tags as $existing) {
+                if ($existing->getId() === $tagId) {
+                    return;
+                }
+            }
+        }
+
+        foreach ($this->tags as $existing) {
+            if ($existing->getName() === $tag->getName()) {
+                return;
+            }
+        }
+
         $this->tags[] = $tag;
     }
 
@@ -82,8 +107,20 @@ class File
         );
     }
 
+    /** @return Tag[] */
     public function getTags(): array
     {
         return $this->tags;
+    }
+
+    private static function normalizePath(string $path): string
+    {
+        $path = trim($path);
+        if ($path === "") {
+            throw new InvalidArgumentException("File path cannot be empty.");
+        }
+
+        $resolved = realpath($path);
+        return $resolved !== false ? $resolved : $path;
     }
 }

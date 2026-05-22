@@ -7,7 +7,8 @@ use Oliveiraj\Aylin\Domain\Model\Tag\Tag;
 interface TagRepository
 {
     public function allTags(): array;
-    public function find(int $id): Tag;
-    public function save(Tag $tag);
-    public function delete(Tag $tag);
+    public function find(int $id): ?Tag;
+    public function findByName(string $name): ?Tag;
+    public function save(Tag $tag): bool;
+    public function delete(Tag $tag): bool;
 }

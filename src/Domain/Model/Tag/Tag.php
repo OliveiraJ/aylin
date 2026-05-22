@@ -4,6 +4,7 @@ namespace Oliveiraj\Aylin\Domain\Model\Tag;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use InvalidArgumentException;
 
 class Tag
 {
@@ -12,12 +13,21 @@ class Tag
     private DateTimeInterface $createdAt;
     private ?DateTimeInterface $updatedAt;
 
-    public function __construct(?int $id, string $name)
-    {
+    public function __construct(
+        ?int $id,
+        string $name,
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $updatedAt = null,
+    ) {
+        $name = trim($name);
+        if ($name === "") {
+            throw new InvalidArgumentException("Tag name cannot be empty.");
+        }
+
         $this->id = $id;
         $this->name = $name;
-        $this->createdAt = new DateTimeImmutable();
-        $this->updatedAt = null;
+        $this->createdAt = $createdAt ?? new DateTimeImmutable();
+        $this->updatedAt = $updatedAt;
     }
 
     public function getId(): ?int
@@ -25,9 +35,19 @@ class Tag
         return $this->id;
     }
 
-    public function setName(string $name)
+    public function setId(int $id): void
     {
-        return $this->name = $name;
+        $this->id = $id;
+    }
+
+    public function setName(string $name): void
+    {
+        $name = trim($name);
+        if ($name === "") {
+            throw new InvalidArgumentException("Tag name cannot be empty.");
+        }
+
+        $this->name = $name;
     }
 
     public function getName(): string
@@ -40,8 +60,13 @@ class Tag
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
+    }
+
+    public function touch(): void
+    {
+        $this->updatedAt = new DateTimeImmutable();
     }
 }

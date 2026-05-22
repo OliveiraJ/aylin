@@ -8,7 +8,8 @@ use Oliveiraj\Aylin\Domain\Model\Tag\Tag;
 interface FileRepository
 {
     public function allFiles(): array;
-    public function find(int $id): File|null;
+    public function find(int $id): ?File;
+    public function findByPath(string $path): ?File;
     public function allFilesByTag(Tag $tag): array;
     public function save(File $file): bool;
     public function insert(File $file): bool;
