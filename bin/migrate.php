@@ -6,6 +6,11 @@ use Oliveiraj\Aylin\Infraestructure\Persistence\ConnectionCreator;
 use Oliveiraj\Aylin\Infraestructure\Persistence\DatabaseMigrator;
 
 $conn = ConnectionCreator::createConnection();
-DatabaseMigrator::migrate($conn);
+$applied = (new DatabaseMigrator())->run($conn);
 
-echo "Database schema applied.\n";
+if ($applied === 0) {
+    echo "Database is up to date.\n";
+    exit(0);
+}
+
+echo "Applied {$applied} migration(s).\n";

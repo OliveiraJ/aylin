@@ -16,6 +16,9 @@ php bin/migrate.php
 
 The SQLite database is created at `database/aylin.db` (gitignored).
 
+Migrations are versioned under `database/migrations/` and tracked in `schema_migrations`.
+Re-running `php bin/migrate.php` only applies pending migrations; existing data is kept.
+
 ## Run tests
 
 ```bash
@@ -60,7 +63,7 @@ php fuzzy_search.php --attach 1 php
 - `src/Application/` — use cases (`IndexDirectory`, `SearchFiles`, `TagFile`)
 - `src/Infraestructure/` — PDO repositories and persistence
 - `fuzzy_search.php` — CLI entrypoint
-- `database/initial_script/init.sql` — schema
+- `database/migrations/` — versioned SQL migrations
 
 ## Development checklist
 
